@@ -242,7 +242,16 @@ video {
   width: 100%;
 }
 
-.server-params,
+.server-params {
+  flex: 1 1 45%;
+  min-width: 300px;
+  max-height: 200px;
+  background-color: #333;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
 .detection-log {
   flex: 1 1 45%;
   min-width: 300px;
@@ -250,6 +259,7 @@ video {
   border-radius: 8px;
   padding: 15px;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  overflow: auto;
 }
 
 .server-params h2,
