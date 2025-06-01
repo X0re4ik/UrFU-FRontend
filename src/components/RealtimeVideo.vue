@@ -155,13 +155,14 @@ onUnmounted(() => {
 
 <style scoped>
 .app {
+  max-height: 100vh;
   margin: 0;
   background: linear-gradient(#999, #666);
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
   color: white;
-  min-height: 100dvh;
+  //min-height: 100dvh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
