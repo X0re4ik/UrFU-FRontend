@@ -163,6 +163,7 @@ onUnmounted(() => {
   font-family: sans-serif;
   color: white;
   -webkit-overflow-scrolling: touch;
+  overflow: hidden;
 }
 
 header {
@@ -183,6 +184,7 @@ header h1 {
   padding: 20px;
   gap: 20px;
   flex: 1;
+  overflow: auto;
 }
 
 .videos-container {
