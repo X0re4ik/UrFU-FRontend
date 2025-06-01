@@ -5,12 +5,25 @@
     </header>
 
     <div class="content">
-      <div class="video-section">
-        <div class="title">Исходный видеопоток</div>
-        <div class="video-container">
-          <video ref="inputVideo" controls autoplay muted playsinline></video>
+      <div class="videos-container">
+        <div class="video-section">
+          <div class="title">Исходный видеопоток</div>
+          <div class="video-container">
+            <video ref="inputVideo" controls autoplay muted playsinline></video>
+          </div>
         </div>
-        <div class="server-params" v-if="serverInfo">
+        <div class="video-section">
+          <div class="title">Обработанный видеопоток</div>
+          <div class="video-container">
+            <video ref="outputVideo" controls autoplay muted playsinline></video>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="tables-container">
+        <div class="server-params" >
           <h2>Параметры сервера</h2>
           <table>
             <tr v-for="(value, key) in formattedServerInfo" :key="key">
@@ -19,31 +32,25 @@
             </tr>
           </table>
         </div>
-      </div>
 
-      <div class="video-section">
-        <div class="title">Обработанный видеопоток</div>
-        <div class="video-container">
-          <video ref="outputVideo" controls autoplay muted playsinline></video>
-        </div>
         <div class="detection-log" v-if="detections.length > 0">
           <h2>История детекций</h2>
           <table>
             <thead>
-              <tr>
-                <th>Время</th>
-                <th>Тип модели</th>
-                <th>Уверенность</th>
-                <th>BBox</th>
-              </tr>
+            <tr>
+              <th>Время</th>
+              <th>Тип модели</th>
+              <th>Уверенность</th>
+              <th>BBox</th>
+            </tr>
             </thead>
             <tbody>
-              <tr v-for="det in detections" :key="det.id + det.timestamp">
-                <td>{{ new Date(det.timestamp).toLocaleTimeString() }}</td>
-                <td>{{ det.modelType }}</td>
-                <td>{{ (det.modelConf * 100).toFixed(1) }}%</td>
-                <td>[{{ det.bbox.join(', ') }}]</td>
-              </tr>
+            <tr v-for="det in detections" :key="det.id + det.timestamp">
+              <td>{{ new Date(det.timestamp).toLocaleTimeString() }}</td>
+              <td>{{ det.modelType }}</td>
+              <td>{{ (det.modelConf * 100).toFixed(1) }}%</td>
+              <td>[{{ det.bbox.join(', ') }}]</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -173,15 +180,23 @@ header h1 {
 
 .content {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   padding: 20px;
   gap: 20px;
   flex: 1;
 }
 
+.videos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
 .video-section {
   flex: 1 1 45%;
+  min-width: 300px;
   max-width: 1500px;
   display: flex;
   flex-direction: column;
@@ -211,73 +226,73 @@ video {
   object-fit: contain;
 }
 
-.server-params {
+.divider {
   width: 100%;
+  height: 3px;
+  background-color: white;
+  margin: 10px 0;
+}
+
+.tables-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.server-params,
+.detection-log {
+  flex: 1 1 45%;
+  min-width: 300px;
   background-color: #333;
   border-radius: 8px;
   padding: 15px;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-.server-params h2 {
+.server-params h2,
+.detection-log h2 {
   margin-top: 0;
   font-size: 18px;
   margin-bottom: 10px;
   text-align: center;
 }
 
-.server-params table {
+.server-params table,
+.detection-log table {
   width: 100%;
   border-collapse: collapse;
 }
 
 .server-params th,
-.server-params td {
+.server-params td,
+.detection-log th,
+.detection-log td {
   border: 1px solid #555;
   padding: 8px;
   text-align: left;
 }
 
-.server-params th {
+.server-params th,
+.detection-log th {
   background-color: #444;
 }
 
-.detection-log {
-  width: 100%;
-  background-color: #2b2b2b;
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
-.detection-log h2 {
-  font-size: 18px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.detection-log table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.detection-log th,
-.detection-log td {
-  border: 1px solid #444;
-  padding: 8px;
-  text-align: left;
-}
-
-.detection-log th {
-  background-color: #3b3b3b;
-}
-
 @media (max-width: 767px) {
+  .videos-container,
+  .tables-container {
+    flex-direction: column;
+  }
+
   .video-section {
     flex: 1 1 100%;
     max-width: 100%;
+  }
+
+  .server-params,
+  .detection-log {
+    flex: 1 1 100%;
   }
 
   header h1 {
@@ -294,7 +309,8 @@ video {
     gap: 15px;
   }
 
-  .server-params {
+  .server-params,
+  .detection-log {
     padding: 10px;
   }
 

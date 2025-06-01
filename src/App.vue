@@ -14,7 +14,6 @@ import RealtimeVideo from './components/RealtimeVideo.vue'
   width: 100vw;
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 </style>
 
