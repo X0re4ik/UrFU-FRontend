@@ -23,7 +23,7 @@
       <div class="divider"></div>
 
       <div class="tables-container">
-        <div class="server-params" >
+        <div class="server-params" v-if="serverInfo">
           <h2>Параметры сервера</h2>
           <table>
             <tr v-for="(value, key) in formattedServerInfo" :key="key">
