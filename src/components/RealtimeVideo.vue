@@ -23,7 +23,7 @@
       <div class="divider"></div>
 
       <div class="tables-container">
-        <div class="server-params" v-if="serverInfo">
+        <div class="server-params" >
           <h2>Параметры сервера</h2>
           <table>
             <tr v-for="(value, key) in formattedServerInfo" :key="key">
@@ -162,8 +162,6 @@ onUnmounted(() => {
   flex-direction: column;
   font-family: sans-serif;
   color: white;
-  //min-height: 100dvh;
-  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
