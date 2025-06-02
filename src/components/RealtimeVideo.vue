@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header>
-      <h1>Мгновенная обработка видео в реальном времени с помощью AI</h1>
+      <h1>Демо стенд работы системы детекции и классфикации в live режиме</h1>
     </header>
 
     <div class="content">
@@ -23,7 +23,7 @@
       <div class="divider"></div>
 
       <div class="tables-container">
-        <div class="server-params" >
+        <div class="server-params">
           <h2>Параметры сервера</h2>
           <table>
             <tr v-for="(value, key) in formattedServerInfo" :key="key">
@@ -37,20 +37,20 @@
           <h2>История детекций</h2>
           <table>
             <thead>
-            <tr>
-              <th>Время</th>
-              <th>Тип модели</th>
-              <th>Уверенность</th>
-              <th>BBox</th>
-            </tr>
+              <tr>
+                <th>Время</th>
+                <th>Тип модели</th>
+                <th>Уверенность</th>
+                <th>BBox</th>
+              </tr>
             </thead>
             <tbody>
-            <tr v-for="det in detections" :key="det.id + det.timestamp">
-              <td>{{ new Date(det.timestamp).toLocaleTimeString() }}</td>
-              <td>{{ det.modelType }}</td>
-              <td>{{ (det.modelConf * 100).toFixed(1) }}%</td>
-              <td>[{{ det.bbox.join(', ') }}]</td>
-            </tr>
+              <tr v-for="det in detections" :key="det.id + det.timestamp">
+                <td>{{ new Date(det.timestamp).toLocaleTimeString() }}</td>
+                <td>{{ det.modelType }}</td>
+                <td>{{ (det.modelConf * 100).toFixed(1) }}%</td>
+                <td>[{{ det.bbox.join(', ') }}]</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -123,8 +123,7 @@ function setupWebSocket() {
       currentDetectionInfo.value = data
       detections.value.unshift(data)
 
-      // Удаляем лишние, если больше 50
-      if (detections.value.length > 50) {
+      if (detections.value.length > 15) {
         detections.value.pop()
       }
     }
@@ -245,11 +244,11 @@ video {
 .server-params {
   flex: 1 1 45%;
   min-width: 300px;
-  max-height: 200px;
+  max-height: 300px;
   background-color: #333;
   border-radius: 8px;
   padding: 15px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .detection-log {
@@ -258,7 +257,7 @@ video {
   background-color: #333;
   border-radius: 8px;
   padding: 15px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   overflow: auto;
 }
 
@@ -291,6 +290,7 @@ video {
 }
 
 @media (max-width: 767px) {
+
   .videos-container,
   .tables-container {
     flex-direction: column;
